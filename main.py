@@ -108,8 +108,5 @@ async def on_message(message):
         await message.channel.send("You must be in the wrong channel.")
     if message.content.startswith('cat'):
         await message.channel.send("Get that garbage out of here!")
-    # if "fight" or "attack" or "beat" or "simp" or "pain" or "kick" or "die" in message.content:
-    #     await message.channel.send("https://tenor.com/view/fight-couple-kicked-gif-11899011")
-
-# show_holiday()
+ 
 client.run(TOKEN)
