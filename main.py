@@ -126,7 +126,7 @@ async def on_message(message):
     if message.content.startswith("&testing"):
         await message.channel.send(message)
 
-@bot.test()
+@bot.command()
 async def test(ctx, *args):
     await ctx.send(len(args))
 
