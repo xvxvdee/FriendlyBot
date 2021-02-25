@@ -51,6 +51,17 @@ def get_joke():
     joke = json_data['setup'] +"\n"+json_data['punchline']
     return joke
 
+def get_joke2():
+    response = requests.get("https://v2.jokeapi.dev/joke/Programming,Dark,Pun")
+    json_data = json.loads(response.text)
+    type = json_data['type']
+    joke = ""
+    if type == "twopart":
+        joke = json_data['setup'] +"\n"+json_data['delivery']
+    else:
+        joke=  json_data['joke']
+    return joke
+
 def show_holiday():
     dt = []
     d = datetime.datetime.now()
@@ -67,7 +78,6 @@ def show_holiday():
 @client.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
-
 
 @client.event
 async def on_message(message):
@@ -94,7 +104,8 @@ async def on_message(message):
     if message.content.startswith('&insult'):
         await message.channel.send(get_insult())
     if message.content.startswith('&joke'):
-        await message.channel.send(get_joke())
+        lst_joke = [get_joke(),get_joke2()]
+        await message.channel.send(random.choice(lst_joke))
     if message.content.startswith('&holiday'):
         lst = show_holiday()
         if len(lst) == 0:
