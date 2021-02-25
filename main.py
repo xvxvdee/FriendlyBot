@@ -45,14 +45,12 @@ def get_insult():
     json_data = json.loads(response.text)
     return json_data['insult']
 
-
 def get_joke():
-    # response = requests.get(
-    #   'https://icanhazdadjoke.com/')
-    # json_data = json.loads(response.text)
-    # print(json_data)
-    return random.choice([geek, icanhazdad, chucknorris, icndb])
-
+    response = requests.get(
+      'https://official-joke-api.appspot.com/jokes/random')
+    json_data = json.loads(response.text)
+    joke = json_data['setup'] +"\n"+json_data['punchline']
+    return joke
 
 def show_holiday():
     dt = []
