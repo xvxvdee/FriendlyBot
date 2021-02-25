@@ -17,16 +17,16 @@ ppGame = ["Nice try!", "I'm not gonna let you win!", "ARRRRGGGHHHH", "You're wea
           "I guess this means... I'm the best!", "Whoops! Oh no! Was that too much for you?", "Now that's what I call a critical hit!",
           "This just shows how much better I am than you.", " So predictable.", "I won't let up.", "Feeling lucky?", "Can you keep up?", "Your purpose has ended.", "Looks like you're going to take the L"]
 
+toxic =['Get a job']
+
 def get_phrasePing():
     num = random.randint(1,100)
-    print(num)
     if num%7==0:
         return True
     return False
 
 def get_phrasePong():
     num = random.randint(1,120)
-    print(num)
     if num%8==0:
         return True
     return False
@@ -73,27 +73,28 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
-    if message.content.startswith('$hello'):
-        await message.channel.send('Goodbye!')
-    if message.content.startswith('$ping'):
+    if message.content.startswith('&ping'):
         phrase = random.choice(ppGame)
         go = get_phrasePing()
         if go:
             await message.channel.send(phrase)
         await message.channel.send('pong!')
-    if message.content.startswith('$pong'):
+    if message.content.startswith('&pong'):
         phrase = random.choice(ppGame)
         go = get_phrasePing()
         if go:
             await message.channel.send(phrase)
         await message.channel.send('ping!')
-    if message.content.startswith('$advice'):
+    if message.content.startswith('&samAdvice'):
+        phrase = random.choice(toxic)
+        await message.channel.send(phrase)
+    if message.content.startswith('&advice'):
         await message.channel.send(get_advice())
-    if message.content.startswith('$insult'):
+    if message.content.startswith('&insult'):
         await message.channel.send(get_insult())
-    if message.content.startswith('$joke'):
+    if message.content.startswith('&joke'):
         await message.channel.send(get_joke())
-    if message.content.startswith('$holiday'):
+    if message.content.startswith('&holiday'):
         lst = show_holiday()
         if len(lst) == 0:
             await message.channel.send("No holidays today.")
@@ -108,5 +109,7 @@ async def on_message(message):
         await message.channel.send("You must be in the wrong channel.")
     if message.content.startswith('cat'):
         await message.channel.send("Get that garbage out of here!")
- 
+  
+
+# show_holiday()
 client.run(TOKEN)
