@@ -6,6 +6,8 @@ import json
 from dotenv import load_dotenv
 import datetime
 from requests.models import Response
+from joke.jokes import *
+
 
 
 load_dotenv()
@@ -45,10 +47,11 @@ def get_insult():
 
 
 def get_joke():
-    response = requests.get(
-        'https://icanhazdadjoke.com/')
-    json_data = json.loads(response.text)
-    return json_data["joke"]
+    # response = requests.get(
+    #   'https://icanhazdadjoke.com/')
+    # json_data = json.loads(response.text)
+    # print(json_data)
+    return random.choice([geek, icanhazdad, chucknorris, icndb])
 
 
 def show_holiday():
