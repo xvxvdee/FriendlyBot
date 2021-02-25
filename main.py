@@ -19,7 +19,7 @@ ppGame = ["Nice try!", "I'm not gonna let you win!", "ARRRRGGGHHHH", "You're wea
           "I guess this means... I'm the best!", "Whoops! Oh no! Was that too much for you?", "Now that's what I call a critical hit!",
           "This just shows how much better I am than you.", " So predictable.", "I won't let up.", "Feeling lucky?", "Can you keep up?", "Your purpose has ended.", "Looks like you're going to take the L"]
 
-toxic =["Don't be fat.", "I think being less fat might help.", "You're jobless and want advice lol.","You may simp for that woman's gorilla grip.", "Finish your work stupid bitch.", "You're a compsci major, whiteboard your life problems", "3 x 23", "You skipped 5 lectures and have 2 pending assignments... I rest my case.", "Get your g2 license.", "Worst case Ontario, you miss a 406 midterm.", "Being fat is temporary, therefore I temporarily hate you.", "Imagine paying $600 for no coop placement.", "You're a low level programmer.", "I hope you're doing well and finish all your exams.", "Rosemary.", "Shut up you literally have a girlfriend.", "Shut up you literally have a job.", "I HATE IT HERE TOO. DONT ASK ME FOR ADVICE.","BEEP BOOP, fat humanoid detected!", "Imagine being a front end developer.", "4.00+ gpa and for what? No coop placement.", "Checkmate Liberal", "Indian guys are dming Kami, you cant be that down bad."]
+toxic =adviceList = ["Don't be fat.", "I think being less fat might help.", "You're jobless and want advice lol.","You may simp for that woman's gorilla grip.", "Finish your work stupid bitch.", "You're a compsci major, whiteboard your life problems", "3 x 23", "You skipped 5 lectures and have 2 pending assignments... I rest my case.", "Get your g2 license.", "Worst case Ontario, you miss a 406 midterm.", "Being fat is temporary, therefore I temporarily hate you.", "Imagine paying $600 for no coop placement.", "You're a low level programmer.", "I hope you're doing well and finish all your exams.", "Rosemary.", "Shut up you literally have a girlfriend.", "Shut up you literally have a job.", "I HATE IT HERE TOO. DONT ASK ME FOR ADVICE.","BEEP BOOP, fat humanoid detected!", "Imagine being a front end developer.", "4.00+ gpa and for what? No coop placement.", "Checkmate Liberal", "Indian guys are dming Kami, you cant be that down bad.", "You're probably an international student... Sorry.", "You have a smaller pp than Igor", "No way man.. NO WAY NO WAY.", "Jon.. help me with my school work", "I LOVE KYLE CHOO MANG.", "My little pogchamp, everything is okay.", "You're my little choo mang.", "You're sus", "Trust me im a computer science major, taking the earths radius and multiplying by the solar mass of Messier 61 we can achieve our horizontal displacement value. This allows us to derive the integral interpolation towards the linear space of a 9D vector in the conscience space. This vector separation allows the atomic sub division to then activate what we call as sleep homogeneous distribution. This state allows a person to maintain their last conscience thought told in a social setting. So therefore you're wrong", "I've been single for 5 years. You don't know the struggle.", "STUPIDITY DETECTED", "Professor Edey is available for appointments.", "Ethan, I thought of adding a fat joke, but I take it back.", "IGOR YOU'RE LITERALLY SO CUTE AND HANDSOME", "At least you're not washed up immortal who lost their smurf to a hacker", "Sharif is fat", "Kami a gold digger", "Dylan uses Jon for work.. But you didn't hear that from me."]
 
 def get_phrasePing():
     num = random.randint(1,100)
@@ -37,7 +37,6 @@ def get_advice():
     response = requests.get("https://api.adviceslip.com/advice")
     json_data = json.loads(response.text)
     return json_data['slip']['advice']
-
 
 def get_insult():
     response = requests.get(
@@ -89,6 +88,7 @@ async def on_message(message):
     if message.content.startswith('&samSays'):
         phrase = random.choice(toxic)
         await message.channel.send(phrase)
+    
     if message.content.startswith('&advice'):
         await message.channel.send(get_advice())
     if message.content.startswith('&insult'):
