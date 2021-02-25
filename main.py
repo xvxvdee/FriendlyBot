@@ -121,8 +121,8 @@ async def on_message(message):
         await message.channel.send("You must be in the wrong channel.")
     if message.content.startswith('cat'):
         await message.channel.send("Get that garbage out of here!")
-    if "val" or "valorant" in message.content:
-        await message.channel.send("Shouldn't you be grinding? It's midterm season. Are you even plat? That's what I thought buddy!")
+    # if "val" or "valorant" in message.content:
+    #     await message.channel.send("Shouldn't you be grinding? It's midterm season. Are you even plat? That's what I thought buddy!")
     if message.content.startswith("&testing"):
         await message.channel.send(message)
 
