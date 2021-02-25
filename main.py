@@ -46,7 +46,7 @@ def get_insult():
 
 def get_joke():
     response = requests.get(
-        'https://geek-jokes.sameerkumar.website/api?format=json')
+        'https://icanhazdadjoke.com/')
     json_data = json.loads(response.text)
     return json_data["joke"]
 
