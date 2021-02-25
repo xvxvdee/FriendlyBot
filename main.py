@@ -73,7 +73,7 @@ def show_holiday():
         if i['date'] == date:
             dt.append(i['name'])
     return dt
-
+bot = '&'
 
 @client.event
 async def on_ready():
@@ -125,6 +125,10 @@ async def on_message(message):
     #     await message.channel.send("Shouldn't you be grinding? It's midterm season. Are you even plat? That's what I thought buddy!")
     if message.content.startswith("&testing"):
         await message.channel.send(message)
+
+@bot.command()
+async def test(ctx, arg):
+    await ctx.send(arg)
 
 # show_holiday()
 client.run(TOKEN)
