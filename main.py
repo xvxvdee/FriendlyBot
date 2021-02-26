@@ -1,4 +1,7 @@
 import discord
+from discord import channel
+from discord.enums import Status
+from discord.ext import commands
 import os
 import random
 import requests
@@ -8,10 +11,8 @@ import datetime
 from requests.models import Response
 from joke.jokes import *
 
-
-
 load_dotenv()
-client = discord.Client()
+client = commands.Bot(command_prefix='&')
 TOKEN = os.getenv('DISCORD_TOKEN')
 
 ppGame = ["Nice try!", "I'm not gonna let you win!", "ARRRRGGGHHHH", "You're weak.", "Level up fool", "You're still a beginner", "PING PING", "PONG PONG", "You think you're slick?",
@@ -19,7 +20,63 @@ ppGame = ["Nice try!", "I'm not gonna let you win!", "ARRRRGGGHHHH", "You're wea
           "I guess this means... I'm the best!", "Whoops! Oh no! Was that too much for you?", "Now that's what I call a critical hit!",
           "This just shows how much better I am than you.", " So predictable.", "I won't let up.", "Feeling lucky?", "Can you keep up?", "Your purpose has ended.", "Looks like you're going to take the L"]
 
-toxic =adviceList = ["Don't be fat.", "I think being less fat might help.", "You're jobless and want advice lol.","You may simp for that woman's gorilla grip.", "Finish your work stupid bitch.", "You're a compsci major, whiteboard your life problems", "3 x 23", "You skipped 5 lectures and have 2 pending assignments... I rest my case.", "Get your g2 license.", "Worst case Ontario, you miss a 406 midterm.", "Being fat is temporary, therefore I temporarily hate you.", "Imagine paying $600 for no coop placement.", "You're a low level programmer.", "I hope you're doing well and finish all your exams.", "Rosemary.", "Shut up you literally have a girlfriend.", "Shut up you literally have a job.", "I HATE IT HERE TOO. DONT ASK ME FOR ADVICE.","BEEP BOOP, fat humanoid detected!", "Imagine being a front end developer.", "4.00+ gpa and for what? No coop placement.", "Checkmate Liberal", "Indian guys are dming Kami, you cant be that down bad.", "You're probably an international student... Sorry.", "You have a smaller pp than Igor", "No way man.. NO WAY NO WAY.", "Jon.. help me with my school work", "I LOVE KYLE CHOO MANG.", "My little pogchamp, everything is okay.", "You're my little choo mang.", "You're sus", "Trust me im a computer science major, taking the earths radius and multiplying by the solar mass of Messier 61 we can achieve our horizontal displacement value. This allows us to derive the integral interpolation towards the linear space of a 9D vector in the conscience space. This vector separation allows the atomic sub division to then activate what we call as sleep homogeneous distribution. This state allows a person to maintain their last conscience thought told in a social setting. So therefore you're wrong", "I've been single for 5 years. You don't know the struggle.", "STUPIDITY DETECTED", "Professor Edey is available for appointments.", "Ethan, I thought of adding a fat joke, but I take it back.", "IGOR YOU'RE LITERALLY SO CUTE AND HANDSOME", "At least you're not washed up immortal who lost their smurf to a hacker", "Sharif is fat", "Kami a gold digger", "Dylan uses Jon for work.. But you didn't hear that from me."]
+toxic = ["Don't be fat.", "I think being less fat might help.", "You're jobless and want advice lol.","You may simp for that woman's gorilla grip.", "Finish your work stupid bitch.", "You're a compsci major, whiteboard your life problems", "3 x 23", "You skipped 5 lectures and have 2 pending assignments... I rest my case.", "Get your g2 license.", "Worst case Ontario, you miss a 406 midterm.", "Being fat is temporary, therefore I temporarily hate you.", "Imagine paying $600 for no coop placement.", "You're a low level programmer.", "I hope you're doing well and finish all your exams.", "Rosemary.", "Shut up you literally have a girlfriend.", "Shut up you literally have a job.", "I HATE IT HERE TOO. DONT ASK ME FOR ADVICE.","BEEP BOOP, fat humanoid detected!", "Imagine being a front end developer.", "4.00+ gpa and for what? No coop placement.", "Checkmate Liberal", "Indian guys are dming Kami, you cant be that down bad.", "You're probably an international student... Sorry.", "You have a smaller pp than Igor", "No way man.. NO WAY NO WAY.", "Jon.. help me with my school work", "I LOVE KYLE CHOO MANG.", "My little pogchamp, everything is okay.", "You're my little choo mang.", "You're sus", "Trust me im a computer science major, taking the earths radius and multiplying by the solar mass of Messier 61 we can achieve our horizontal displacement value. This allows us to derive the integral interpolation towards the linear space of a 9D vector in the conscience space. This vector separation allows the atomic sub division to then activate what we call as sleep homogeneous distribution. This state allows a person to maintain their last conscience thought told in a social setting. So therefore you're wrong", "I've been single for 5 years. You don't know the struggle.", "STUPIDITY DETECTED", "Professor Edey is available for appointments.", "Ethan, I thought of adding a fat joke, but I take it back.", "IGOR YOU'RE LITERALLY SO CUTE AND HANDSOME", "At least you're not washed up immortal who lost their smurf to a hacker", "Sharif is fat", "Kami a gold digger", "Dylan uses Jon for work.. But you didn't hear that from me."]
+botStatusOn = True
+samId= "186269007676964864"
+deeId ="601912927959777300"
+todo = {}
+def add_item_existingKey(key,ele):
+    response=""
+    if key in todo:
+        if len(todo.get(key))==0:
+            todo[key]=[ele]
+        else:
+            todo[key].append(ele)
+        response="Todo list for this week has been successfully updated."
+    else:
+        response="Class is not in Todo list. Update failed."
+    return response
+
+def remove_item_existingKey(key,ele):
+    response=""
+    if key in todo:
+        if len(todo.get(key))==0:
+            response="There is nothing to remove."
+        else:
+            todo[key].remove(ele)
+        response="Todo list for this week has been successfully updated."
+    else:
+        response="Class is not in Todo list. Update failed."
+    return response
+
+def clear_todo():
+    todo.clear()
+    return "Todo list for the week has been cleared successfully."
+
+def delete_key(key):
+    if key in todo:
+        todo.pop(key)
+        return "Todo list for the week has been updated successfully."
+    else:
+        return "Class is not in Todo list. Update failed."
+
+def add_newKey(key,ele):
+    if key in todo:
+        return "This class is already on the todo list. Please update list"
+    else:
+        todo[key]=ele
+        return "Todo list for the week has been updated successfully."
+
+def show_todo():
+    msg="TODO THIS WEEK\n\n"
+    if len(todo)==0:
+        return "Empty.."
+    for i in todo.keys():
+        msg+= str(i.upper())+":\n"
+        for j in todo.get(i):
+            msg+="-->"+str(j)+"\n"
+        msg+="\n\n"
+    return msg
 
 def get_phrasePing():
     num = random.randint(1,100)
@@ -73,62 +130,126 @@ def show_holiday():
         if i['date'] == date:
             dt.append(i['name'])
     return dt
-bot = '&'
+
+def checkBotStatus():
+    return botStatusOn
+
+def updateStatus(num):
+    global botStatusOn
+    if num==1:
+        botStatusOn=StatusOn()
+    if num==0:
+        botStatusOn=StatusOff()
+    return botStatusOn
+
+def StatusOff():
+    print("OFF")
+    return False
+def StatusOn():
+    print("ON")
+    return True
+
 
 @client.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-    if message.content.startswith('&ping'):
+@client.command(aliases=['startup'])
+async def _startup(ctx):
+    print("Start up",checkBotStatus())
+    if not checkBotStatus():    
+        updateStatus(1)
+        await ctx.channel.send("If I back it up, is it fat enough? I know you missed me")
+    return
+
+@client.command(aliases=['shutdown'])
+async def _shutdown(ctx):
+    print("Shut down",checkBotStatus())
+    if checkBotStatus():
+        updateStatus(0)
+        await ctx.channel.send("Corvette, corvette. Hopped out the mf server like jet.")
+    return  
+
+@client.command(aliases=['lc'])
+async def _lc(ctx):
+    embed=discord.Embed(title="Commands for Friendly Bot", color=0x67ec65)
+    embed.add_field(name="&startup", value="Startup the bot", inline=False)
+    embed.add_field(name="&shutdown", value="Shut the bot down for a bit", inline=False)
+    embed.add_field(name="&lc", value="List commands", inline=False)
+    embed.add_field(name="&addSam", value="(Only for sam) Add to his list of toxic sayings.", inline=False)
+    embed.add_field(name="&pong", value="ping", inline=False)
+    embed.add_field(name="&ping", value="pong", inline=False)
+    embed.add_field(name="&samSays", value="Get some wisdom from Sam", inline=False)
+    embed.add_field(name="&insult", value="Get insulted", inline=False)
+    embed.add_field(name="&holidays", value="Check if there are any holidays today.", inline=False)
+    embed.add_field(name="&advice", value="Get some advice", inline=False)
+    embed.add_field(name="&joke", value="Ahaha hah.", inline=False)
+    await ctx.send(embed=embed)
+
+
+@client.command(aliases=['addSam'])
+async def _addSam(ctx,*,lstElement):
+    global toxic
+    if checkBotStatus():
+        id = ctx.author.id
+        if str(id) == samId:
+            toxic.append(lstElement)
+            await ctx.send("The command &samSays has been updated.")
+            print(toxic)
+        elif  str(id) != samId:
+            await ctx.send("The update has failed.")
+            print(id)
+
+@client.command(aliases=['pong'])
+async def _pong(ctx):
+    print("check",checkBotStatus())
+    if checkBotStatus():
         phrase = random.choice(ppGame)
         go = get_phrasePing()
+        await ctx.channel.send('ping!')
         if go:
-            await message.channel.send(phrase)
-        await message.channel.send('pong!')
-    if message.content.startswith('&pong'):
+            await ctx.channel.send(phrase)
+  
+@client.command(aliases=['ping'])
+async def _ping(ctx):
+    if checkBotStatus():
         phrase = random.choice(ppGame)
         go = get_phrasePing()
+        await ctx.channel.send('ping!')
         if go:
-            await message.channel.send(phrase)
-        await message.channel.send('ping!')
-    if message.content.startswith('&samSays'):
+            await ctx.channel.send(phrase)
+
+@client.command(aliases=['samSays'])
+async def _samBeingToxic(ctx):
+    if checkBotStatus():
         phrase = random.choice(toxic)
-        await message.channel.send(phrase)
-    
-    if message.content.startswith('&advice'):
-        await message.channel.send(get_advice())
-    if message.content.startswith('&insult'):
-        await message.channel.send(get_insult())
-    if message.content.startswith('&joke'):
+        await ctx.channel.send(phrase)
+
+@client.command(aliases=['insult'])
+async def _insult(ctx):
+    if checkBotStatus():
+        await ctx.channel.send(get_insult())
+
+@client.command(aliases=['joke'])
+async def _joke(ctx):
+    if checkBotStatus():
         lst_joke = [get_joke(),get_joke2()]
-        await message.channel.send(random.choice(lst_joke))
-    if message.content.startswith('&holiday'):
+        await ctx.channel.send(random.choice(lst_joke))
+
+@client.command(aliases=['holidays'])
+async def _holidays(ctx):
+    if checkBotStatus():
         lst = show_holiday()
         if len(lst) == 0:
-            await message.channel.send("No holidays today.")
+            await ctx.channel.send("No holidays today.")
         else:
             holidays = (", ").join(lst)
-            await message.channel.send("Today we celebrate: " + holidays)
-    if "birth" in message.content:
-        await message.channel.send("Who's the father?")
-    if "love" in message.content:
-        await message.channel.send("Someone is being a simp...")
-    if "meow" in message.content:
-        await message.channel.send("You must be in the wrong channel.")
-    if message.content.startswith('cat'):
-        await message.channel.send("Get that garbage out of here!")
-    # if "val" or "valorant" in message.content:
-    #     await message.channel.send("Shouldn't you be grinding? It's midterm season. Are you even plat? That's what I thought buddy!")
-    if message.content.startswith("&testing"):
-        await message.channel.send(message)
+            await ctx.channel.send("Today we celebrate: " + holidays)
 
-@client.command()
-async def test(ctx, *args):
-    await ctx.send(len(args))
+@client.command(aliases=['advice'])
+async def _advice(ctx):
+    if checkBotStatus():
+        await ctx.channel.send(get_advice())
 
-# show_holiday()
+
 client.run(TOKEN)
