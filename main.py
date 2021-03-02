@@ -215,7 +215,7 @@ async def _ping(ctx):
     if checkBotStatus():
         phrase = random.choice(ppGame)
         go = get_phrasePing()
-        await ctx.channel.send('ping!')
+        await ctx.channel.send('pong!')
         if go:
             await ctx.channel.send(phrase)
 
